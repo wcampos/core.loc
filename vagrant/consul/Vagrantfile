@@ -1,0 +1,39 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.define "consul1" do |node1|
+    node1.vm.box = "bento/centos-7"
+    node1.vm.hostname = "consul1"
+    node1.vm.network "public_network", bridge: "br0", ip: "192.168.1.18"
+    node1.vm.provision "chef_solo" do |chef|
+      chef.arguments = "--chef-license accept"
+      chef.cookbooks_path = "../../cookbooks/linux"
+      chef.roles_path = "../../roles"
+      chef.add_role "consul"
+    end
+  end
+
+  config.vm.define "consul2" do |node2|
+    node2.vm.box = "bento/centos-7"
+    node2.vm.hostname = "consul2"
+    node2.vm.network "public_network", bridge: "br0", ip: "192.168.1.19" 
+    node2.vm.provision "chef_solo" do |chef|
+      chef.arguments = "--chef-license accept"
+      chef.cookbooks_path = "../../cookbooks/linux"
+      chef.roles_path = "../../roles"
+      chef.add_role "consul"
+    end  
+  end
+
+  config.vm.define "consul3" do |node3|
+    node3.vm.box = "bento/centos-7"
+    node3.vm.hostname = "consul3"
+    node3.vm.network "public_network", bridge: "br0", ip: "192.168.1.20" 
+    node3.vm.provision "chef_solo" do |chef|
+      chef.arguments = "--chef-license accept"
+      chef.cookbooks_path = "../../cookbooks/linux"
+      chef.roles_path = "../../roles"
+      chef.add_role "consul"
+    end
+  end        
+
+end

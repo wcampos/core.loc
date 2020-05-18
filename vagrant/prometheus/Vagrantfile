@@ -1,0 +1,16 @@
+Vagrant.configure("2") do |config|
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "prometheus"
+    vb.memory = "2048"
+    vb.cpus = 2
+  end
+  config.vm.box = "bento/centos-7"
+  config.vm.hostname = "prometheus"
+  config.vm.network "public_network", bridge: "br0", ip: "192.168.1.15"
+  config.vm.provision "chef_solo" do |chef|
+    chef.arguments = "--chef-license accept"
+    chef.cookbooks_path = "../../cookbooks/linux"
+    chef.roles_path = "../../roles"
+    chef.add_role "prometheus"
+  end
+end

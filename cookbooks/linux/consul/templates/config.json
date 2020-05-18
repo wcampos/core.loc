@@ -1,0 +1,31 @@
+{
+    "advertise_addr": "<%= node['network']['interfaces']['eth1']['addresses'].keys[1] %>",
+    "bind_addr": "<%= node['network']['interfaces']['eth1']['addresses'].keys[1] %>",
+    "bootstrap_expect": 3,
+    "client_addr": "0.0.0.0",
+    "datacenter": "CORE",
+    "data_dir": "/var/lib/consul",
+    "domain": "consul",
+    "enable_script_checks": true,
+    "dns_config": {
+        "enable_truncate": true,
+        "only_passing": true
+    },
+    "enable_syslog": true,
+    "encrypt": "XXqL0GNNC3HxSXbJs0wcr+vLftg0FKR7XaHT690CELc=",
+    "leave_on_terminate": true,
+    "log_level": "INFO",
+    "rejoin_after_leave": true,
+    "retry_join": [
+        "consul1",
+        "consul2",
+        "consul3"
+    ],
+    "server": true,
+    "start_join": [
+        "consul1",
+        "consul2",
+        "consul3"
+    ],
+    "ui": true
+}

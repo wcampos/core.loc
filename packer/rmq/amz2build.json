@@ -1,0 +1,27 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "ssh_port": 22,
+      "region": "us-east-1",
+      "source_ami": "ami-0323c3dd2da7fb37d",
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "RabbitMQ-AMZNLINUX2{{isotime \"02-Jan-06_15_04_05\"}}",
+      "ami_description": "RabbitMQ_AMI_AMZNLINUX2",
+      "tags": {
+        "Name": "RabbitMQ-{{isotime \"02-Jan-06 15_04_05\"}}",
+        "OS_Version": "AMZNLINUX2",
+        "Release": "{{isotime \"02-Jan-06_15_04_05\"}}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["../../cookbooks/linux"],
+      "roles_path": "../../roles",
+      "run_list": "role[rabbitmq]"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+    "variables": {
+      "vcenter_host": "neuro.core.loc",
+      "vcenter_user": "root",
+      "vcenter_password": "Turrialba1981!",
+      "ssh_user": "packer",
+      "ssh_password": "packer",
+      "dc": "dc1",
+      "cluster": "cluster",
+      "network": "VM Network",
+      "storage": "datastore-vms",
+      "template_dir": "/",
+      "iso_url": "http://old-releases.ubuntu.com/releases/precise/ubuntu-12.04.2-server-amd64.iso",
+      "iso_checksum": "af5f788aee1b32c4b2634734309cc9e9",
+      "iso_checksum_type": "md5",
+      "cpu_cores": "2",
+      "ram_mb": "4096",
+      "disk_size_gb": "50"
+    },
+  
+    "builders": [
+      {
+        "type": "vsphere-iso",
+  
+        "vcenter_server":      "{{ user `vcenter_host` }}",
+        "username":            "{{ user `vcenter_user` }}",
+        "password":            "{{ user `vcenter_password` }}",
+        "insecure_connection": "true",
+        "ssh_username": "{{ user `ssh_user` }}",
+        "ssh_password": "{{ user `ssh_password` }}",
+  
+        "datacenter": "{{ user `dc` }}",
+        "cluster": "{{ user `cluster` }}",
+        "network": "{{ user `network` }}",
+        "network_card": "vmxnet3",
+        "datastore": "{{ user `storage` }}",
+        "vm_name": "centos7_base_{{isotime \"2006-01-02\"}}",
+        "guest_os_type": "rhel7_64Guest",
+  
+        "CPUs":             "{{ user `cpu_cores` }}",
+        "RAM":              "{{ user `ram_mb` }}",
+        "RAM_reserve_all": true,
+  
+        "disk_controller_type":  "pvscsi",
+        "disk_size":        "{{ user `disk_size_gb` }}",
+        "disk_thin_provisioned": true,
+        "folder": "{{ user `template_dir` }}",
+  
+        "iso_paths": [
+          "{{ user `iso_path` }}"
+        ],
+        "floppy_files": [
+          "{{ user `ks_file` }}"
+        ],
+        "boot_order": "disk,cdrom",
+        "convert_to_template": true
+      }
+    ],
+  
+    "provisioners": [
+      {
+        "type": "shell",
+        "inline": ["rm -rf /etc/yum.repos.d/*"],
+        "execute_command": "echo 'root' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+        "pause_before": "10s"
+      },
+  
+      { 
+        "type": "file",
+        "source": "repos/",
+        "destination": "/etc/yum.repos.d"
+      },
+  
+      {
+        "type": "shell",
+        "execute_command": "echo 'root' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+        "script": "scripts/centos7_cleanup.sh",
+        "expect_disconnect": "true"
+      }
+    ]
+  }

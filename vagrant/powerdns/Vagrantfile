@@ -1,0 +1,10 @@
+Vagrant.configure("2") do |config|
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "powerdns"
+    vb.memory = "2048"
+    vb.cpus = 2
+  end
+  config.vm.box = "powerdns-core.loc"
+  config.vm.hostname = "powerdns"
+  config.vm.network "public_network", bridge: "br0", ip: "192.168.1.17"
+end
