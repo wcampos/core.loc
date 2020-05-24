@@ -1,3 +1,7 @@
 name "jenkins"
-description "Jnekins Server"
-run_list "recipe[base::default]","recipe[jenkins::default]"
+description "Jenkins Server"
+run_list "recipe[base::default]",
+         "recipe[jenkins::default]",
+         "recipe[prometheus::repo]",
+         "recipe[consul-client::default]",
+         "recipe[node-exporter::default]"

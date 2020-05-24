@@ -5,6 +5,7 @@
 # Copyright:: 2020, The Authors, All Rights Reserved.
 [
     'epel-release',
+    'bind-utils',
     'vim',
     'wget',
     'sshpass',
