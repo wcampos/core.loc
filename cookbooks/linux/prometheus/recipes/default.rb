@@ -6,4 +6,5 @@
 
 include_recipe '::repo'
 include_recipe '::package'
+include_recipe '::config'
 include_recipe '::service'

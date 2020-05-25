@@ -1,0 +1,19 @@
+{
+  "service": {
+    "name": "prometheus",
+    "tags": [
+      "metrics"
+    ],
+    "port": 9090,
+     "checks": [
+      {
+          "interval" :"10s",
+          "timeout" : "2s",
+          "id": "prometheus",
+          "name": "HTTP prometheus 9090",
+          "http": "http://localhost:9090/targets",
+          "tls_skip_verify": false
+      }
+    ]
+  }
+}

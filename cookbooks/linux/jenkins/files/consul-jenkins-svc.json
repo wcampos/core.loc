@@ -1,0 +1,19 @@
+{
+    "service": {
+      "name": "jenkins",
+      "tags": [
+        "metrics"
+      ],
+      "port": 8080,
+       "checks": [
+        {
+            "interval" :"10s",
+            "timeout" : "2s",
+            "id": "jenkins",
+            "name": "HTTP jenkins 8080",
+            "http": "http://localhost:8080/login",
+            "tls_skip_verify": false
+        }
+      ]
+    }
+  }

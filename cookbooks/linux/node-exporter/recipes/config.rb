@@ -10,4 +10,5 @@ cookbook_file '/etc/consul.d/node_exporter.json' do
     group 'root'
     mode '0755'
     action :create
+    notifies :restart, 'service[node_exporter]'
 end

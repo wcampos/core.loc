@@ -10,11 +10,13 @@ remote_file '/tmp/consul.zip' do
     group 'root'
     mode '0755'
     action :create
+    not_if {::File.exist?('/tmp/consul.zip')}    
 end
 
 zipfile '/tmp/consul.zip' do
     into '/usr/bin/'
     overwrite true
+    not_if {::File.exist?('/usr/bin/consul')}    
   end
 
 #execute 'consul autocomplete' do
